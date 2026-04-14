@@ -40,7 +40,13 @@ async function webhookRoutes (fastify) {
    * Query param:  ?mode=queue   override per-request (optional)
    */
   fastify.post('/webhooks/:provider', {
-    config: { rawBody: true }
+    config: {
+      rawBody: true,
+      rateLimit: {
+        max: parseInt(process.env.RATE_LIMIT_MAX || '100', 10),
+        timeWindow: parseInt(process.env.RATE_LIMIT_WINDOW || '60000', 10)
+      }
+    }
   }, async (request, reply) => {
     const { provider } = request.params
     const { secret, header, mode } = getProviderConfig(provider)
@@ -59,7 +65,9 @@ async function webhookRoutes (fastify) {
       return reply.code(401).send({ error: 'Invalid signature' })
     }
 
-    const effectiveMode = request.query.mode || mode
+    const effectiveMode = (request.query.mode === 'immediate' || request.query.mode === 'queue')
+      ? request.query.mode
+      : mode
 
     if (effectiveMode === 'queue') {
       await enqueue({
