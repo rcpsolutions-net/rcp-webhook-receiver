@@ -1,0 +1,39 @@
+{
+  "name": "rcp-webhook-receiver",
+  "version": "1.0.0",
+  "description": "RCP v4.2 incoming third-party webhook handler",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "tap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rcpsolutions-net/rcp-webhook-receiver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rcpsolutions-net/rcp-webhook-receiver/issues"
+  },
+  "homepage": "https://github.com/rcpsolutions-net/rcp-webhook-receiver#readme",
+  "dependencies": {
+    "@fastify/rate-limit": "^10.3.0",
+    "dotenv": "^17.4.2",
+    "fastify": "^5.8.5"
+  },
+  "devDependencies": {
+    "tap": "^21.6.3"
+  },
+  "tap": {
+    "include": [
+      "test/**/*.test.js"
+    ],
+    "statements": 90,
+    "branches": 90,
+    "lines": 90,
+    "functions": 80
+  }
+}
