@@ -30,6 +30,7 @@ function buildApp (opts = {}) {
     'application/json',
     { parseAs: 'buffer' },
     (req, body, done) => {
+      console.log('--- received request with content-type application/json ---'); // Log content type 
       req.rawBody = body
       try {
         done(null, JSON.parse(body.toString('utf8')))
@@ -44,6 +45,7 @@ function buildApp (opts = {}) {
   // (e.g. application/x-www-form-urlencoded, text/plain)
   for (const ct of ['application/x-www-form-urlencoded', 'text/plain']) {
     fastify.addContentTypeParser(ct, { parseAs: 'buffer' }, (req, body, done) => {
+      console.log(`--- received request with content-type ${ct} ---`); // Log content type
       req.rawBody = body
       done(null, body.toString('utf8'))
     })
