@@ -8,8 +8,8 @@ function getProviderConfig (provider) {
   const key = provider.toUpperCase().replace(/-/g, '_');
 
   const secret = process.env[`WEBHOOK_SECRET_${key}`]
-  const header = process.env[`WEBHOOK_HEADER_${key}`] || 'x-hub-signature-256'
-  const timestamp = process.env[`WEBHOOK_HEADER_TIMESTAMP_${key}`] || 'x-hub-timestamp'
+  const header = process.env[`WEBHOOK_HEADER_${key}`] || 'x-gs-signature'
+  const timestamp = process.env[`WEBHOOK_HEADER_TIMESTAMP_${key}`] || 'x-gs-timestamp'
   const mode = process.env[`WEBHOOK_MODE_${key}`] || 'immediate'
 
   return { secret, header: header.toLowerCase(), timestamp: timestamp.toLowerCase(), mode }
@@ -43,9 +43,7 @@ async function webhookRoutes (fastify) {
     }
   
     if (!timestamp) {
-
       request.log.warn({ provider }, 'missing required timestamp header for HMAC verification')
-
       return reply.code(400).send({ error: 'Missing timestamp header' })
     }
     const rawBody = timestamp + '\n' + request.rawBody;
