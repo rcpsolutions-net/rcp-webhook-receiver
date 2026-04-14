@@ -59,7 +59,7 @@ async function webhookRoutes (fastify) {
     }
     else {
       console.log(rawBody.toString('utf8')); // Log the raw body for debugging
-      //console.log(`--- incoming webhook HMAC signature verification succeeded for provider: ${provider}`); // Log success
+      console.log(`--- incoming webhook HMAC signature verification succeeded for provider: ${provider}`); // Log success
     }
 
     const effectiveMode = (request.query.mode === 'immediate' || request.query.mode === 'queue')
