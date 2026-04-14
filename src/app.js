@@ -29,8 +29,7 @@ function buildApp (opts = {}) {
   fastify.addContentTypeParser(
     'application/json',
     { parseAs: 'buffer' },
-    (req, body, done) => {
-      console.log('--- received request with content-type application/json ---'); // Log content type 
+    (req, body, done) => {     
       req.rawBody = body
       try {
         done(null, JSON.parse(body.toString('utf8')))
@@ -40,12 +39,8 @@ function buildApp (opts = {}) {
       }
     }
   )
-
-  // Also capture raw body for other common MIME types used by webhooks
-  // (e.g. application/x-www-form-urlencoded, text/plain)
   for (const ct of ['application/x-www-form-urlencoded', 'text/plain']) {
-    fastify.addContentTypeParser(ct, { parseAs: 'buffer' }, (req, body, done) => {
-      console.log(`--- received request with content-type ${ct} ---`); // Log content type
+    fastify.addContentTypeParser(ct, { parseAs: 'buffer' }, (req, body, done) => {  
       req.rawBody = body
       done(null, body.toString('utf8'))
     })
@@ -55,9 +50,7 @@ function buildApp (opts = {}) {
     return reply.code(200).send({ status: 'ok' })
   })
 
-  // --------------------------------------------------------------------------
-  // Webhook routes
-  // --------------------------------------------------------------------------
+  
   fastify.register(webhookRoutes)
 
   return fastify
