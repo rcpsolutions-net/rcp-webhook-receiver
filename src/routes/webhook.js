@@ -57,14 +57,11 @@ async function webhookRoutes (fastify) {
       request.log.warn({ provider, header }, 'HMAC signature verification failed')
       return reply.code(401).send({ error: 'Invalid signature' })
     }
-    else {
-      console.log(rawBody.toString('utf8')); // Log the raw body for debugging
-      console.log(`--- incoming webhook HMAC signature verification succeeded for provider: ${provider}`); // Log success
+    else { 
+      console.log(`--- hmac verified incoming webhook from provider: ${provider}`, request.rawBody.toString('utf8')); // Log the raw body for debugging
     }
 
-    const effectiveMode = (request.query.mode === 'immediate' || request.query.mode === 'queue')
-      ? request.query.mode
-      : mode
+    const effectiveMode = (request.query.mode === 'immediate' || request.query.mode === 'queue') ? request.query.mode : mode
 
     if (effectiveMode === 'queue') {
       await enqueue({
