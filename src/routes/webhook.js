@@ -41,7 +41,13 @@ async function webhookRoutes (fastify) {
       return reply.code(400).send({ error: 'Unknown provider' })
     }
 
-    const rawBody = request.rawBody
+    const timestamp = request.headers['x-gs-timestamp'];
+    if (!timestamp) {
+      request.log.warn({ provider }, 'missing required timestamp header for HMAC verification')
+      return reply.code(400).send({ error: 'Missing timestamp header' })
+    }
+    const rawBody = timestamp + '\n' + request.rawBody;
+
     const signature = request.headers[header]
 
     const valid = verifySignature({ secret, payload: rawBody, signature })
