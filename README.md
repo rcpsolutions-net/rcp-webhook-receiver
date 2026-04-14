@@ -1,2 +1,2 @@
 # rcp-webhook-receiver
-RCP v4.,2 incoming third-party webhook handler
+RCP v4.2 incoming third-party webhook handler
