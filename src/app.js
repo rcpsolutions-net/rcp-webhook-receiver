@@ -15,12 +15,6 @@ const webhookRoutes = require('./routes/webhook')
 function buildApp (opts = {}) {
   const fastify = Fastify(opts)
 
-  // --------------------------------------------------------------------------
-  // Rate limiting
-  // Protect webhook endpoints from abuse.  Configurable via environment vars:
-  //   RATE_LIMIT_MAX      – max requests per window (default: 100)
-  //   RATE_LIMIT_WINDOW   – time-window in ms       (default: 60000 = 1 min)
-  // --------------------------------------------------------------------------
   fastify.register(rateLimit, {
     max: parseInt(process.env.RATE_LIMIT_MAX || '100', 10),
     timeWindow: parseInt(process.env.RATE_LIMIT_WINDOW || '60000', 10)
@@ -55,9 +49,6 @@ function buildApp (opts = {}) {
     })
   }
 
-  // --------------------------------------------------------------------------
-  // Health-check
-  // --------------------------------------------------------------------------
   fastify.get('/health', async (_request, reply) => {
     return reply.code(200).send({ status: 'ok' })
   })
