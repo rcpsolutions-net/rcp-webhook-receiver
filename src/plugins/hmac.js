@@ -25,8 +25,6 @@ function verifySignature ({ secret, payload, signature }) {
 
   const normalised = signature.startsWith('sha256=') ? signature.slice('sha256='.length) : signature
 
-  console.log(`--- verifying HMAC signature ---`); // Log verification attempt
-
   console.log('--- received signature ---', signature); // Log the received signature for debugging
   const expected = computeHmac(secret, payload)
   console.log('--- normalised signature ---', normalised); // Log received signature
