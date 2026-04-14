@@ -49,7 +49,7 @@ function buildApp (opts = {}) {
     })
   }
 
-  fastify.get('/health', async (_request, reply) => {
+  fastify.get('/3PS/incoming/webhook/health', async (_request, reply) => {
     return reply.code(200).send({ status: 'ok' })
   })
 

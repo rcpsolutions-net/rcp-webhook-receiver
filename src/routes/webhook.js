@@ -34,6 +34,8 @@ async function webhookRoutes (fastify) {
     const { provider } = request.params
     const { secret, header, mode } = getProviderConfig(provider)
 
+    console.log(provider, secret, header, mode); // Log provider config for debugging
+
     if (!secret) {
       request.log.warn({ provider }, 'no HMAC secret configured for provider')
       return reply.code(400).send({ error: 'Unknown provider' })
