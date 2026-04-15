@@ -26,6 +26,12 @@ async function handleImmediate(request, provider, body) {
 }
 
 async function webhookRoutes(fastify) {
+  
+  connect(fastify).catch((err) => {
+    console.error("Failed to connect to MongoDB:", err);
+    process.exit(1);
+  });
+
   fastify.post(
     "/3PS/incoming/webhook/:provider",
     {
@@ -113,10 +119,5 @@ async function webhookRoutes(fastify) {
     },
   );
 }
-
-connect().catch((err) => {
-  console.error("Failed to connect to MongoDB:", err);
-  process.exit(1);
-});
 
 module.exports = webhookRoutes;
