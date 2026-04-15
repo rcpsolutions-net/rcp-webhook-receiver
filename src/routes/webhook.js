@@ -2,6 +2,7 @@
 
 const { verifySignature } = require("../plugins/hmac");
 const { enqueue } = require("../queue");
+const { db } = require("../plugins/mongoose");
 
 function getProviderConfig(provider) {
   const key = provider.toUpperCase().replace(/-/g, "_");
@@ -42,6 +43,16 @@ async function webhookRoutes(fastify) {
         getProviderConfig(provider);
 
       console.log(provider, secret, header, timestampHeader, mode); // Log provider config for debugging
+
+      let ob = JSON.parse(request.rawBody.toString("utf8"));
+      
+
+      await db.collection("incoming-webhooks").insertOne({
+        provider,
+        eventName: ob.EventName,
+        payload: ob,
+        processed: false,            
+      });
 
       if (!secret) {
         request.log.warn(
