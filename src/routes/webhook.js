@@ -47,7 +47,7 @@ async function webhookRoutes(fastify) {
       let ob = JSON.parse(request.rawBody.toString("utf8"));
       
 
-      await db.collection("incoming-webhooks").insertOne({
+      await db.webhookIn.create({
         provider,
         eventName: ob.EventName,
         payload: ob,
