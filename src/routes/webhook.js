@@ -104,7 +104,7 @@ async function webhookRoutes(fastify) {
         payload: ob,
         processed: false,            
       }).then(async () => {
-        request.log.info({ provider, eventName: ob.EventName }, "webhook stored in database");
+        console.log({ provider, eventName: ob.EventName }, "webhook stored in database");
 
       await handleImmediate(request, provider, request.body);
 
