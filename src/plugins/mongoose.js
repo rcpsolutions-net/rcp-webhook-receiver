@@ -14,7 +14,7 @@ let config = {
 
 async function connectToMongoDB(fastify, options) {
   try {
-    fastify.log.info(`Connecting to MongoDB at ${config.mongoUri}`);
+    fastify.log.info(`Connecting to MongoDB at some address....`);
     
     await mongoose.connect(config.mongoUri);
 
