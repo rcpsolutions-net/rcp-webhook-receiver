@@ -103,15 +103,15 @@ async function webhookRoutes(fastify) {
         eventName: ob.EventName,
         payload: ob,
         processed: false,            
-      }).then(() => {
+      }).then(async () => {
         request.log.info({ provider, eventName: ob.EventName }, "webhook stored in database");
-      }).catch((err) => {
-        request.log.error({ err, provider, eventName: ob.EventName }, "Failed to store webhook in database");
-      });
 
       await handleImmediate(request, provider, request.body);
 
       return reply.code(200).send({ status: "ok" });
+      }).catch((err) => {
+        request.log.error({ err, provider, eventName: ob.EventName }, "Failed to store webhook in database");
+      });
     },
   );
 }
