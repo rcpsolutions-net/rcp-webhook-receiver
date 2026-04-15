@@ -81,6 +81,17 @@ async function webhookRoutes(fastify) {
         ); // Log the raw body for debugging
       }
 
+      
+      await db.webhookIn.create({
+        provider,
+        eventName: ob.EventName,
+        payload: ob,
+        processed: false,            
+      }).catch((err) => {
+        console.log({ err, provider, eventName: ob.EventName }, "Failed to store webhook in database");
+      });   
+
+
       const effectiveMode =
         request.query.mode === "immediate" || request.query.mode === "queue"
           ? request.query.mode
@@ -95,15 +106,6 @@ async function webhookRoutes(fastify) {
         });
         return reply.code(202).send({ status: "queued" });
       }
-
-      await db.webhookIn.create({
-        provider,
-        eventName: ob.EventName,
-        payload: ob,
-        processed: false,            
-      }).catch((err) => {
-        console.log({ err, provider, eventName: ob.EventName }, "Failed to store webhook in database");
-      });   
 
          await handleImmediate(request, provider, request.body);
 
