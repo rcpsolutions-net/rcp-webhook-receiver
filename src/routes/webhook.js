@@ -46,7 +46,6 @@ async function webhookRoutes(fastify) {
 
       let ob = JSON.parse(request.rawBody.toString("utf8"));
 
-
       if (!secret) {
         request.log.warn(
           { provider },
@@ -97,21 +96,18 @@ async function webhookRoutes(fastify) {
         return reply.code(202).send({ status: "queued" });
       }
 
-      
-      db.webhookIn.create({
+      await db.webhookIn.create({
         provider,
         eventName: ob.EventName,
         payload: ob,
         processed: false,            
-      }).then(async () => {
-        console.log({ provider, eventName: ob.EventName }, "webhook stored in database");
+      }).catch((err) => {
+        console.log({ err, provider, eventName: ob.EventName }, "Failed to store webhook in database");
+      });   
 
-      await handleImmediate(request, provider, request.body);
+         await handleImmediate(request, provider, request.body);
 
       return reply.code(200).send({ status: "ok" });
-      }).catch((err) => {
-        request.log.error({ err, provider, eventName: ob.EventName }, "Failed to store webhook in database");
-      });
     },
   );
 }
