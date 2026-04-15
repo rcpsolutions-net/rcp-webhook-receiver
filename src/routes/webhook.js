@@ -2,7 +2,7 @@
 
 const { verifySignature } = require("../plugins/hmac");
 const { enqueue } = require("../queue");
-const { db } = require("../plugins/mongoose");
+const { connect, db } = require("../plugins/mongoose");
 
 function getProviderConfig(provider) {
   const key = provider.toUpperCase().replace(/-/g, "_");
@@ -111,5 +111,10 @@ async function webhookRoutes(fastify) {
     },
   );
 }
+
+await connect().catch((err) => {
+  console.error("Failed to connect to MongoDB:", err);
+  process.exit(1);
+});
 
 module.exports = webhookRoutes;
