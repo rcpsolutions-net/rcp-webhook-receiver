@@ -11,16 +11,16 @@ const _queue = []
  * @param {string} event.receivedAt - ISO timestamp
  */
 
-async function enqueue (event) {
+async function enqueue(event) {
   _queue.push(event)
 }
 
 
-function drain () {
+function drain() {
   return _queue.splice(0, _queue.length)
 }
 
-function depth () {
+function depth() {
   return _queue.length
 }
 
