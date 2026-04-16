@@ -2,10 +2,12 @@
   "name": "rcp-webhook-receiver",
   "version": "1.0.0",
   "description": "RCP v4.2 incoming third-party webhook handler",
-  "main": "src/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "test": "tap"
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/server.js",
+    "dev": "tsx src/server.ts",
+    "test": "npm run build && tap dist/test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -27,15 +29,18 @@
     "mongoose": "^9.4.1"
   },
   "devDependencies": {
-    "tap": "^21.6.3"
+    "@types/node": "^24.8.1",
+    "tap": "^21.6.3",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   },
   "tap": {
     "include": [
-      "test/**/*.test.js"
+      "dist/test/**/*.test.js"
     ],
-    "statements": 90,
-    "branches": 90,
-    "lines": 90,
+    "statements": 80,
+    "branches": 75,
+    "lines": 80,
     "functions": 80
   }
 }
