@@ -92,7 +92,7 @@ export default async function webhookRoutes(fastify: FastifyInstance): Promise<v
         return reply.code(401).send({ error: 'Invalid signature' });
       }
 
-      request.log.info({ provider }, `HMAC verified — incoming webhook`);
+      //request.log.info({ provider }, `HMAC verified — incoming webhook`);
 
       if (process.env.SKIP_MONGODB === 'true' || mongoose.connection.readyState !== 1) {
         request.log.warn({ provider }, 'MongoDB unavailable, skipping webhook persistence');
