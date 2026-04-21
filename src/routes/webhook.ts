@@ -124,10 +124,12 @@ export default async function webhookRoutes(fastify: FastifyInstance): Promise<v
           body: parsedBody,
           receivedAt: new Date().toISOString(),
         });
+        
         return reply.code(202).send({ status: 'queued' });
       }
 
       await handleImmediate(request, provider, parsedBody);
+
       return reply.code(200).send({ status: 'ok' });
       ***/
     },
