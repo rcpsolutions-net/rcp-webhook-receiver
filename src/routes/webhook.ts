@@ -105,14 +105,14 @@ export default async function webhookRoutes(fastify: FastifyInstance): Promise<v
             processed: false,
           })
           .then(() => {
-            request.log.debug({ provider, eventName: parsedBody.EventName }, 'Webhook stored in database');
-            return reply.code(200).send({ status: 'ok' });
+            request.log.debug({ provider, eventName: parsedBody.EventName }, 'Webhook stored in database');            
           })
           .catch((err: Error) => {
-            request.log.error({ err, provider, eventName: parsedBody.EventName }, 'Failed to store webhook in database');
-            return reply.code(200).send({ status: 'ok' });
-          });
+            request.log.error({ err, provider, eventName: parsedBody.EventName }, 'Failed to store webhook in database');           
+          });          
       }
+
+      return reply.code(200).send({ status: 'ok' });
 
       /***
       const effectiveMode: 'immediate' | 'queue' = request.query.mode === 'immediate' || request.query.mode === 'queue' ? request.query.mode : mode;
