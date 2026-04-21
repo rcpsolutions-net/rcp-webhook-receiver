@@ -97,18 +97,24 @@ export default async function webhookRoutes(fastify: FastifyInstance): Promise<v
       if (process.env.SKIP_MONGODB === 'true' || mongoose.connection.readyState !== 1) {
         request.log.warn({ provider }, 'MongoDB unavailable, skipping webhook persistence');
       } else {
-        await incomingWebhooks
+        incomingWebhooks      // change this to non-blocking by not awaiting it and just logging success/failure
           .create({
             provider,
             eventName: parsedBody.EventName ?? 'unknown',
             payload: parsedBody,
             processed: false,
           })
+          .then(() => {
+            request.log.debug({ provider, eventName: parsedBody.EventName }, 'Webhook stored in database');
+            return reply.code(200).send({ status: 'ok' });
+          })
           .catch((err: Error) => {
             request.log.error({ err, provider, eventName: parsedBody.EventName }, 'Failed to store webhook in database');
+            return reply.code(200).send({ status: 'ok' });
           });
       }
 
+      /***
       const effectiveMode: 'immediate' | 'queue' = request.query.mode === 'immediate' || request.query.mode === 'queue' ? request.query.mode : mode;
 
       if (effectiveMode.toLowerCase() === 'queue') {
@@ -123,6 +129,7 @@ export default async function webhookRoutes(fastify: FastifyInstance): Promise<v
 
       await handleImmediate(request, provider, parsedBody);
       return reply.code(200).send({ status: 'ok' });
+      ***/
     },
   );
 }
