@@ -18,16 +18,23 @@ const HONEYPOT_URLS = [
 const DEFAULT_SUSPICIOUS_PATHS_START_WITH = [
   '/.env', 
   '/wp-admin', 
-  '/wp-login.php', '/phpmyadmin',
-  '/Wsusadmin', '/.git', '/config', '/backup', '/cgi-bin',
-  '/ext-js', '/xmlrpc.php', '/actuator', '/console',
+  '/wp-login.php', 
+  '/phpmyadmin',
+  '/Wsusadmin', 
+  '/.git', 
+  '/config', 
+  '/backup', 
+  '/cgi-bin',
+  '/ext-js', 
+  '/xmlrpc.php', 
+  '/actuator', 
+  '/console',
 ];
 
 const DEFAULT_SUSPICIOUS_PATHS_CONTAIN = [
-  '.php', '.cfm', 'backup', 'shell', 'cgi', 'env', 'git', 'docker', 'kubernetes',
-  '.php3', '.php4', '.php5', '.phtml', '.asp', '.aspx', '.jsp', '.jspx',
-  '.cgi', '.pl', '.sh', '.bash', '.zsh', 'passwd', 'shadow',
-  'htaccess', 'htpasswd', 'aws', 'azure', 'gcp', 'k8s', 'kubectl', 'win.ini',
+  '.php', '.cfm', 'cgi', '.git', '.phtml', '.aspx', '.jspx',
+  '.cgi', '.pl', '.sh', '.bash', '.zsh', 'passwd', 'shadow', 'htaccess', 
+  'htpasswd', 'kubectl', 'win.ini',
 ];
 
 interface BotTrapOptions {
