@@ -2,12 +2,16 @@ import 'dotenv/config';
 
 import Fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import rateLimit from '@fastify/rate-limit';
-
+import botTrap from './plugins/botTrap';
 import webhookRoutes from './routes/webhook';
 import { connectToMongoDB } from './plugins/mongoose';
 
 export async function buildApp(opts: FastifyServerOptions = {}): Promise<FastifyInstance> {
   const fastify = Fastify(opts);
+
+  await fastify.register(botTrap, {
+    logProbes: true,
+  });
 
   await fastify.register(rateLimit, {
     max: Number.parseInt(process.env.RATE_LIMIT_MAX ?? '100', 10),
