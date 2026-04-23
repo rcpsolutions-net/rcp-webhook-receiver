@@ -55,7 +55,7 @@ export default async function webhookRoutes(fastify: FastifyInstance): Promise<v
       config: {
         rawBody: true,
         rateLimit: {
-          max:        parseInt(process.env.RATE_LIMIT_MAX    ?? '1000',  10),
+          max:        parseInt(process.env.RATE_LIMIT_MAX    ?? '1200',  10),
           timeWindow: parseInt(process.env.RATE_LIMIT_WINDOW ?? '60000', 10),
         },
       },
