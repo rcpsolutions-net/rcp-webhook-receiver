@@ -26,7 +26,6 @@ const REDIRECT_URLS = [
 const DEFAULT_SUSPICIOUS_PATHS_START_WITH = [
   '/.env',
   '/wp-admin',
-  '/wp-login.php',
   '/phpmyadmin',
   '/wsusadmin',
   '/.git',
@@ -34,15 +33,12 @@ const DEFAULT_SUSPICIOUS_PATHS_START_WITH = [
   '/backup',
   '/cgi-bin',
   '/ext-js',
-  '/xmlrpc.php',
   '/console',
 ];
 
 // all lower case
 const DEFAULT_SUSPICIOUS_PATHS_CONTAIN = [
-  '.php', '.cfm', 'cgi', '.git', '.phtml', '.aspx', '.jspx',
-  '.cgi', '.pl', '.sh', '.bash', '.zsh', 'passwd', 'shadow', 'htaccess',
-  'kubectl', 'win.ini',
+  '.php', '.cfm', '.cgi', '.git', '.phtml', '.aspx', '.jspx', '.pl', '.sh', '.bash', '.zsh', 'passwd', 'shadow', 'htaccess', 'win.ini',
 ];
 
 interface BotTrapOptions {
