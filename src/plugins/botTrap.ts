@@ -15,26 +15,27 @@ const HONEYPOT_URLS = [
   'https://www.peopledaily.com.cn', // People's Daily (CCP mouthpiece)
 ];
 
+// all lower case
 const DEFAULT_SUSPICIOUS_PATHS_START_WITH = [
   '/.env', 
   '/wp-admin', 
   '/wp-login.php', 
   '/phpmyadmin',
-  '/Wsusadmin', 
+  '/wsusadmin', 
   '/.git', 
   '/config', 
   '/backup', 
   '/cgi-bin',
   '/ext-js', 
   '/xmlrpc.php', 
-  '/actuator', 
   '/console',
 ];
 
+// all lower case
 const DEFAULT_SUSPICIOUS_PATHS_CONTAIN = [
   '.php', '.cfm', 'cgi', '.git', '.phtml', '.aspx', '.jspx',
   '.cgi', '.pl', '.sh', '.bash', '.zsh', 'passwd', 'shadow', 'htaccess', 
-  'htpasswd', 'kubectl', 'win.ini',
+  'kubectl', 'win.ini',
 ];
 
 interface BotTrapOptions {
@@ -66,10 +67,10 @@ const botTrapPlugin: FastifyPluginAsync<BotTrapOptions> = async (fastify, opts) 
   function isSuspicious(url: string): { matched: boolean; matchType?: 'startsWith' | 'contains'; matchedOn?: string } {
     const lower = url.toLowerCase();
 
-    const startMatch = watchedStartWith.find(path => lower.startsWith(path.toLowerCase()));
+    const startMatch = watchedStartWith.find(path => lower.startsWith(path));
     if (startMatch) return { matched: true, matchType: 'startsWith', matchedOn: startMatch };
 
-    const containsMatch = watchedContains.find(fragment => lower.includes(fragment.toLowerCase()));
+    const containsMatch = watchedContains.find(fragment => lower.includes(fragment));
     if (containsMatch) return { matched: true, matchType: 'contains', matchedOn: containsMatch };
 
     return { matched: false };
