@@ -51,6 +51,7 @@ interface BotTrapOptions {
 }
 
 function escapeRegExp(str: string): string {
+return str;
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
