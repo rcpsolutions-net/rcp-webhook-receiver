@@ -14,7 +14,7 @@ export async function buildApp(opts: FastifyServerOptions = {}): Promise<Fastify
   });
 
   await fastify.register(rateLimit, {
-    max: Number.parseInt(process.env.RATE_LIMIT_MAX ?? '100', 10),
+    max: Number.parseInt(process.env.RATE_LIMIT_MAX ?? '500', 10),
     timeWindow: Number.parseInt(process.env.RATE_LIMIT_WINDOW ?? '1000', 10),
   });
 
